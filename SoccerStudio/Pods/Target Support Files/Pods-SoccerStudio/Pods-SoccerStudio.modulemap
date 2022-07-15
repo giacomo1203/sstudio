@@ -1,0 +1,6 @@
+framework module Pods_SoccerStudio {
+  umbrella header "Pods-SoccerStudio-umbrella.h"
+
+  export *
+  module * { export * }
+}

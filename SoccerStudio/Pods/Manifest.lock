@@ -1,0 +1,20 @@
+PODS:
+  - IQKeyboardManagerSwift (6.5.10)
+  - SlideMenuControllerSwift (4.0.0)
+
+DEPENDENCIES:
+  - IQKeyboardManagerSwift
+  - SlideMenuControllerSwift
+
+SPEC REPOS:
+  trunk:
+    - IQKeyboardManagerSwift
+    - SlideMenuControllerSwift
+
+SPEC CHECKSUMS:
+  IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
+  SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
+
+PODFILE CHECKSUM: 011c3694bb8799db75d242628e51cf1c17569bee
+
+COCOAPODS: 1.11.2
