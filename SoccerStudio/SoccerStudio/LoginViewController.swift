@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SlideMenuControllerSwift
 
 class LoginViewController: UIViewController {
     
@@ -32,30 +31,38 @@ class LoginViewController: UIViewController {
         button.layer.cornerRadius = 16.0
         button.clipsToBounds = true
         
-        
-
+        addStyleToElements()
         // Do any additional setup after loading the view.
     }
+    
+    @objc private func backButtonPressed() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func addStyleToElements() {
+        self.navigationItem.hidesBackButton = true
+        let customView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let imageView = UIImageView(frame: CGRect(x: -10, y: 10, width: 20, height: 20))
+        if let imgBackArrow = UIImage.init(named: "arrow_left")?.withRenderingMode(.alwaysTemplate) {
+            imageView.image = imgBackArrow
+            imageView.contentMode = .center
+            imageView.tintColor = .white
+        }
+        customView.addSubview(imageView)
+        let backTap = UITapGestureRecognizer(target: self, action: #selector(self.backButtonPressed))
+        customView.addGestureRecognizer(backTap)
+        let leftBarButtonItem = UIBarButtonItem(customView: customView)
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
+    
     
     
     @IBAction func onHome(_ sender: Any) {
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let mainViewController = storyBoard.instantiateViewController(withIdentifier: "MainViewController") as! ContainerViewController
-        let leftViewController = storyBoard.instantiateViewController(withIdentifier: "LeftViewController") as! LeftViewController
-        
-        let nvc: UINavigationController = UINavigationController(rootViewController: mainViewController)
-        
-        UINavigationBar.appearance().tintColor = UIColor(hex: "24624F")
-        
-        leftViewController.mainViewController = nvc
-        
-        let slideMenuController = ExSlideMenuController(mainViewController:nvc, leftMenuViewController: leftViewController)
-        //slideMenuController.delegate = mainViewController as! SlideMenuControllerDelegate
-    
-        UIApplication.shared.windows.first?.rootViewController = slideMenuController
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateInitialViewController()!
+        controller.modalPresentationStyle = .fullScreen
+        self.present(controller, animated: true, completion: nil)
     }
     
 

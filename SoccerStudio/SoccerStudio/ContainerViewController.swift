@@ -11,10 +11,9 @@ import AVKit
 
 class ContainerViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var contentNotifications: UIView!
-    
     @IBOutlet weak var stackView: UIStackView!
-    
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var firstCollectionView: UICollectionView!
     
@@ -32,15 +31,17 @@ class ContainerViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidLoad()
         self.title = "Home"
         
+        if revealViewController() != nil {
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+        }
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         contentNotifications.addGestureRecognizer(tap)
         
-        let back = UIImage(named: "menu")?.withRenderingMode(.alwaysOriginal)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: back, style:.plain, target: nil, action: nil)
-        
-        firstCollectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-        secondCollectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-        thirdCollectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        firstCollectionView.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        secondCollectionView.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        thirdCollectionView.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         
         // Do any additional setup after loading the view.
     }
@@ -77,28 +78,29 @@ class ContainerViewController: UIViewController, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if collectionView == firstCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! HomeCollectionViewCell
             
-            cell.background.image = UIImage(named: "img\(self.items[indexPath.row])")
+            cell.imageView.image = UIImage(named: "img\(self.items[indexPath.row])")
             
             return cell
         }else if collectionView == secondCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! HomeCollectionViewCell
             
-            cell.background.image = UIImage(named: "img\(self.items1[indexPath.row])")
+            cell.imageView.image = UIImage(named: "img\(self.items1[indexPath.row])")
             
             return cell
         }else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! HomeCollectionViewCell
             
-            cell.background.image = UIImage(named: "img\(self.items2[indexPath.row])")
+            cell.imageView.image = UIImage(named: "img\(self.items2[indexPath.row])")
             
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videoURL = URL(string: "http://jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v")
+        let video = Manager.shared.categories.first?.videos.first?.video
+        let videoURL = URL(string: video ?? "")
         let player = AVPlayer(url: videoURL!)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player

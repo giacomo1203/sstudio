@@ -7,6 +7,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Alamofire
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,8 +15,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
         guard let _ = (scene as? UIWindowScene) else { return }
         
+        let window = UIWindow(windowScene: scene as! UIWindowScene)
+        window.backgroundColor = .white
+        let mainStoryBoard = UIStoryboard(name: "Login", bundle: nil)
+        let viewController = mainStoryBoard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let navigationController = UINavigationController(rootViewController: viewController)
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+        self.window = window
+        
+        didRetrieveVideos()
+        
+        setup()
+    }
+    
+    func didRetrieveVideos() {
+        AF.request("http://giacomo.one/soccer/categories.php")
+          .responseDecodable(of: CategoryResponse.self) { (response) in
+              switch response.result {
+              case .failure:
+                  fatalError("Failure")
+              case .success(let value):
+                  Manager.shared.categories = value.categories
+              }
+          }
+    }
+    
+    func setup() {
         IQKeyboardManager.shared.enable = true
         
         if #available(iOS 15, *) {

@@ -7,7 +7,9 @@ target 'SoccerStudio' do
 
   # Pods for SoccerStudio
 
-pod 'SlideMenuControllerSwift'
 pod 'IQKeyboardManagerSwift'
+pod 'TabsPager'
+pod 'Alamofire'
+pod 'SDWebImage', '~> 5.0'
 
 end

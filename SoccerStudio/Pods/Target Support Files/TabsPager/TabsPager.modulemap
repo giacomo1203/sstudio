@@ -1,0 +1,6 @@
+framework module TabsPager {
+  umbrella header "TabsPager-umbrella.h"
+
+  export *
+  module * { export * }
+}

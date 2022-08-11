@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     
     @IBAction func onLogin(_ sender: Any) {
         
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         self.navigationController?.pushViewController(newViewController, animated: true)
     }
