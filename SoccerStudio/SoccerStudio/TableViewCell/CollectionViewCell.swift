@@ -20,7 +20,7 @@ class CollectionViewCell: UICollectionViewCell {
         containerView.backgroundColor = .white
         containerView.layer.shadowOffset = CGSize(width: 0, height: 0)
         containerView.layer.shadowColor = UIColor.darkGray.cgColor
-        containerView.layer.shadowOpacity = 1
+        containerView.layer.shadowOpacity = 0.2
         containerView.layer.shadowRadius = 4
         containerView.layer.cornerRadius = 6
     }
